@@ -512,3 +512,103 @@ $$\frac{1}{3} \times 0 \times 0 = \mathbf{0.0}$$
 
 ### Why "Naive" works here
 Notice that the algorithm didn't care about the *order* of the words. "Money Win" would have gotten the exact same score as "Win Money." Even though it ignored the sentence structure, it correctly identified that "Win" and "Money" are words that heavily "vote" for the Spam category.
+
+
+# Support Vector Machines (SVM): The Complete Guide
+
+**Support Vector Machines (SVMs)** are powerful supervised learning algorithms used for **Classification** (grouping things) and **Regression** (predicting numbers).
+
+Think of SVM as a **Perfectionist Algorithm**. It doesn't just want to separate two groups of data; it wants to separate them with the **widest possible safety gap**.
+
+---
+
+## Part 1: The Core Concept (Linear SVM)
+
+### 1. The Goal: Maximizing the Margin
+Imagine you have red dots and blue dots on a piece of paper. You want to draw a straight line to separate them.
+* **Bad Line:** A line that passes very close to the dots. It's risky.
+* **SVM Line:** A line that is exactly in the middle of the widest gap between the two groups.
+
+This "gap" is called the **Margin**. SVM tries to find the **Optimal Hyperplane** that maximizes this margin.
+
+
+
+### 2. Key Terminology
+
+| Term | Definition | The Analogy |
+| :--- | :--- | :--- |
+| **Hyperplane** | The decision boundary. In 2D, it's a line. In 3D, it's a flat plane. | The center line of a road. |
+| **Margin** | The distance between the hyperplane and the nearest data points. | The width of the road (we want it wide!). |
+| **Support Vectors** | The specific data points that lie on the very edge of the margin. | The "pillars" holding up the road. |
+
+> **Note:** The "Support Vectors" are the *only* data points that matter. If you deleted all the other points far away from the line, the line wouldn't move. These specific points "support" the decision boundary.
+
+### 3. The Math (Simplified)
+The hyperplane is defined by this equation:
+
+$$w \cdot x + b = 0$$
+
+* **$x$:** The input features (the data).
+* **$w$ (Weight):** Controls the **orientation/angle** of the hyperplane.
+* **$b$ (Bias):** Controls the **position** (shifts the line up/down or left/right).
+
+During training, the SVM adjusts $w$ and $b$ to find the widest street.
+
+---
+
+<img width="317" height="159" alt="image" src="https://github.com/user-attachments/assets/1f6d9cdf-668f-4e7b-a550-6c7b1add7a27" />
+
+## Part 2: Non-Linear SVM (The "Kernel Trick")
+
+In the real world, data is rarely clean. Sometimes, the Red dots are clumped in the middle, surrounded by a ring of Blue dots. You cannot draw a straight line to separate them. This is **Non-Linearly Separable** data.
+
+To solve this, SVM uses the **Kernel Trick**.
+
+### 1. The Analogy: "Lifting the Marbles"
+Imagine Red and Blue marbles sitting on a flat table (2D). The Red ones are in the center. You can't separate them with a straight stick.
+
+Now, imagine you slap the bottom of the table in the center:
+1.  The Red marbles fly up into the air (3D space).
+2.  The Blue marbles stay low.
+3.  Now that they are in 3D, you **can** slide a flat sheet (a plane) between the flying Red marbles and the sitting Blue marbles.
+
+
+
+### 2. What is a Kernel Function?
+A Kernel Function is the math that "lifts" the data from low dimensions (2D) to high dimensions (3D or more) where it becomes easy to separate.
+
+**Common Kernel Types:**
+* **Polynomial Kernel:** Adds curved lines (like $x^2$ or $x^3$). Good for slightly curved data.
+* **Radial Basis Function (RBF):** The most popular choice. It uses a Gaussian function to create complex "bubbles" or regions around data. It handles very complex patterns.
+* **Sigmoid Kernel:** Similar to Logistic Regression. Creates an S-shaped decision boundary.
+
+### 3. Use Case: Image Classification
+Non-Linear SVMs are great for images (e.g., Cats vs. Dogs).
+* **Features:** Fur texture, ear shape, nose size.
+* **Relationship:** These features interact in complex ways (non-linear).
+* **Result:** The Kernel Trick allows SVM to separate "Cat" patterns from "Dog" patterns even though a straight line couldn't do it.
+
+---
+
+## Part 3: The Optimization Problem
+
+How does the computer actually find the answer? It solves a math problem:
+
+**Minimize:**
+$$\frac{1}{2} ||w||^2$$
+
+**Subject to:**
+$$y_i(w \cdot x_i + b) \geq 1$$
+
+**Translation:**
+1.  **Minimize $||w||$:** In SVM math, making $w$ smaller actually makes the **Margin** bigger. So, this line means **"Maximize the Margin."**
+2.  **Subject to...:** This constraint ensures we don't cheat. It says, "Maximize the margin, BUT ensure every data point is still classified correctly on the right side of the road (by a distance of at least 1)."
+
+---
+
+## Part 4: Summary of Assumptions
+
+Why choose SVM?
+1.  **High Dimensionality:** It works great even if you have more features (columns) than data points (rows).
+2.  **Robust:** It ignores outliers because it only cares about the Support Vectors (the edge cases).
+3.  **No Distribution Assumptions:** You don't need to worry if your data follows a Bell Curve or not.
