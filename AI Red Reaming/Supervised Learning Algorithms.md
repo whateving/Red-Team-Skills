@@ -149,3 +149,84 @@ For Linear Regression to be accurate, your data must meet 4 criteria:
 3.  **Homoscedasticity:** Constant variance of errors.
     * *Simple English:* The "tube" of errors around the line should be roughly the same width all the way along the line. It shouldn't fan out like a cone.
 4.  **Normality:** The errors (residuals) follow a Normal Distribution (Bell Curve).
+
+
+
+
+# 📉 Logistic Regression: Quick Reference Notes
+
+## 1. Core Concept
+**Logistic Regression** is a supervised learning algorithm used for **Classification**, not Regression (despite its name).
+
+* **The Goal:** Predict the probability that a data point belongs to a specific category.
+* **The Output:** A probability score between **0 and 1**.
+* **The Use Case:** Binary Classification (Yes/No, True/False, 0/1).
+    * *Example:* Is this email Spam? (Output: 0.95 probability = Yes).
+
+---
+
+## 2. Classification vs. Regression
+Make sure you are using the right tool.
+
+| Feature | **Regression** (Linear) | **Classification** (Logistic) |
+| :--- | :--- | :--- |
+| **Output** | A continuous number (e.g., Price = $500k). | A discrete class/label (e.g., Is Spam? = Yes). |
+| **Question** | "How much?" or "How many?" | "Which one?" or "Is it A or B?" |
+
+---
+
+## 3. The Math: The Sigmoid Function
+Linear regression produces a straight line that can go to infinity. Logistic Regression needs to "squash" that line so the answer stays between 0 and 1 (0% to 100%).
+
+It uses the **Sigmoid Function** (S-Curve):
+
+$$P(x) = \frac{1}{1 + e^{-z}}$$
+
+<img width="485" height="323" alt="image" src="https://github.com/user-attachments/assets/7caf4a54-255d-459c-935c-fdede2e78357" />
+
+
+* **$P(x)$**: The predicted probability.
+* **$e$**: Euler's number (approx 2.718).
+* **$z$**: The linear input ($mx + c$).
+
+**How it works visually:**
+
+
+
+* If the input is very negative, the output is close to **0**.
+* If the input is very positive, the output is close to **1**.
+* It curves smoothly in an "S" shape.
+
+---
+
+## 4. Making the Decision: Thresholds & Boundaries
+
+### The Threshold
+The model gives you a probability (e.g., 0.8), but you need a hard label (Yes or No). We use a **Threshold**.
+* **Standard Threshold:** 0.5
+* **Logic:**
+    * If Prediction > 0.5 $\rightarrow$ Class 1 (Positive/Yes)
+    * If Prediction < 0.5 $\rightarrow$ Class 0 (Negative/No)
+
+### The Decision Boundary & Hyperplanes
+The "line" that splits your data classes apart is called the **Decision Boundary**.
+
+
+<img width="699" height="537" alt="image" src="https://github.com/user-attachments/assets/253ed304-cf04-42f8-a718-329ae9d2b0e9" />
+
+
+
+* **In 2D (2 features):** The boundary is a **Line**.
+* **In 3D (3 features):** The boundary is a flat **Plane**.
+* **In 4D+ (Many features):** The boundary is called a **Hyperplane**.
+    * *Simple definition:* A flat subspace that slices the data into two halves.
+
+---
+
+## 5. Key Assumptions
+For Logistic Regression to work best, check these requirements:
+
+1.  **Binary Outcome:** The target must be categorical with two options (0 or 1).
+2.  **Linearity of Log Odds:** The relationship between features and the *log-odds* of the outcome is linear.
+3.  **No Multicollinearity:** The input variables (predictors) should not be highly correlated with each other (e.g., don't use "Age in Years" and "Age in Months" as two separate inputs).
+4.  **Large Sample Size:** Generally requires more data than simple linear regression to be reliable.
