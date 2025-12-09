@@ -1,4 +1,4 @@
-🧠 Supervised Learning: The "Teacher" Method
+# 🧠 Supervised Learning: The "Teacher" Method
 
 ## The Core Concept:
 **Supervised Learning** is like teaching a child with flashcards. You show the computer data (the flashcard) and tell it the **correct answer (the label)**. By seeing enough examples, the computer learns to recognize the patterns on its own.
@@ -82,3 +82,70 @@ Getting the model to learn just right is the hardest part.
     * **L2 Regularization**: Shrinks features to be very small but keeps them (reduces their impact).
 
 
+# 📈 Linear Regression: Quick Reference Notes
+
+## 1. Core Concept
+**Linear Regression** is a supervised learning algorithm used to predict a **continuous target variable** (a number) based on independent variables.
+
+* **The Goal:** Find the "Line of Best Fit" (a straight line) that passes as close as possible to all data points.
+* **The Analogy:** Predicting a house's price based on size.
+    * *Observation:* As size increases, price usually increases.
+    * *Model:* The line quantifies exactly how much price increases for every extra square foot.
+
+---
+
+## 2. Regression vs. Classification
+Before using the model, ensure you are solving a **Regression** problem, not a Classification one.
+
+| Feature | **Regression** | **Classification** |
+| :--- | :--- | :--- |
+| **Goal** | Predict a specific **quantity**. | Predict a **category** or label. |
+| **Output** | Continuous number (e.g., 100.5, 5000). | Discrete Class (e.g., "Spam", "Yes"). |
+| **Examples** | House Price, Temperature, Sales. | Email Spam Filters, Image Recognition. |
+
+---
+
+## 3. The Mathematics
+
+### A. Simple Linear Regression (One Predictor)
+Used when predicting a target based on a **single** input variable.
+
+> **Equation:** `y = mx + c`
+
+* **y**: The predicted value (Target).
+* **x**: The input variable (Predictor).
+* **m**: The slope (How much `y` changes when `x` changes).
+* **c**: The intercept (The value of `y` when `x` is 0).
+
+### B. Multiple Linear Regression (Multiple Predictors)
+Used when predicting a target based on **two or more** input variables (e.g., Size + Location + Age).
+
+> **Equation:** `y = b0 + b1x1 + b2x2 + ... + bnxn`
+
+* **b0**: The y-intercept.
+* **x1, x2...**: The different input variables.
+* **b1, b2...**: The coefficients (weights) for each specific variable.
+
+---
+
+## 4. How the Model Learns: Ordinary Least Squares (OLS)
+How does the computer find the "Best Fit"? It uses **OLS**.
+
+**The Objective:** Minimize the error between the *predicted* value and the *actual* value.
+
+**The Steps:**
+1.  **Calculate Residuals:** Find the difference between the real data point and the regression line.
+2.  **Square the Residuals:** Square the values to make them all positive and penalize large errors heavily.
+3.  **Sum the Squares (RSS):** Add them all up to get the *Residual Sum of Squares*.
+4.  **Minimize:** The algorithm adjusts the line (the slopes and intercepts) until this sum is the smallest number possible.
+
+---
+
+## 5. Key Assumptions
+For Linear Regression to be accurate, your data must meet 4 criteria:
+
+1.  **Linearity:** There is actually a linear (straight-line) relationship between inputs and output.
+2.  **Independence:** Data points are not affecting one another (e.g., one customer's purchase doesn't force another's).
+3.  **Homoscedasticity:** Constant variance of errors.
+    * *Simple English:* The "tube" of errors around the line should be roughly the same width all the way along the line. It shouldn't fan out like a cone.
+4.  **Normality:** The errors (residuals) follow a Normal Distribution (Bell Curve).
