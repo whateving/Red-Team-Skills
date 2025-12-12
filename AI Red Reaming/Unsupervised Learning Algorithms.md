@@ -280,3 +280,111 @@ How do you know when to stop dropping dimensions?
 1.  **Linearity:** PCA assumes the data structure is linear. It draws straight lines. If your data looks like a spiral (Swiss Roll), PCA will fail (use t-SNE or UMAP instead).
 2.  **Scale Sensitivity:** You **must** standardize data first.
 3.  **Outliers:** PCA tries to capture *variance*. Extreme outliers have huge variance, so PCA will obsess over them, potentially skewing the results.
+
+
+# Anomaly Detection (The "Watchdog")
+
+**Definition:** Anomaly detection (or Outlier Detection) is an **unsupervised** technique used to identify data points that behave very differently from the "normal" crowd.
+
+**The Goal:** Find the "odd ones out." These often represent critical events like fraud, system errors, or medical issues.
+
+<img width="933" height="516" alt="image" src="https://github.com/user-attachments/assets/e4025225-74d2-4deb-97d6-6237c215d5b2" />
+
+> **Analogy: The Security Guard**
+> Imagine a security guard watching a building lobby.
+> * **Normal:** People walk in at 9 AM and leave at 5 PM.
+> * **Anomaly:** Someone climbs through a window at 3 AM.
+> The guard doesn't need to know *who* the intruder is, just that their behavior doesn't fit the normal pattern.
+
+---
+
+## 1. The Three Types of Anomalies
+
+Not all weird data is weird in the same way.
+
+### A. Point Anomalies (Global Outliers)
+A single data point that is just way off the charts.
+* *Example:* A credit card transaction for $50,000 when the user usually spends $50.
+* *Visual:* A red dot floating far away from the main blue cluster.
+
+### B. Contextual Anomalies (Conditional)
+Data that is normal in one situation but weird in another.
+* *Example:* Wearing a swimsuit is normal at the beach (Context A), but anomalous at a business meeting (Context B).
+* *Example:* 30°C temperature is normal in July, but an anomaly in December.
+
+### C. Collective Anomalies (Group)
+Individual points might look normal, but *together* they form a strange pattern.
+* *Example:* Trying to log into a bank account is normal. Trying 500 times in one second is an anomaly (Cyberattack).
+
+---
+
+## 2. Common Techniques
+
+### Statistical Methods
+Assume data follows a shape (like a Bell Curve). Anything too far from the average (e.g., outside the 3rd standard deviation) is an outlier.
+* *Tools:* Z-Score, Boxplots.
+
+### Clustering Methods
+Group the data. Any point that refuses to join a group, or forms a tiny, lonely group, is an outlier.
+* *Tools:* K-Means (looking for small clusters), DBSCAN.
+
+### Machine Learning Methods
+Algorithms specifically built to hunt for differences.
+* *Tools:* One-Class SVM, Isolation Forest, Local Outlier Factor (LOF).
+
+---
+
+## 3. Deep Dive: The Algorithms
+
+### A. One-Class SVM (The "Fence Builder")
+This algorithm draws a tight boundary (fence) around the "normal" data.
+* **Mechanism:** It treats the origin (0,0) as the only "negative" data point and tries to separate all your data from it.
+* **Result:** Anything inside the fence is Safe (Normal). Anything outside is an Intruder (Anomaly).
+* **Best for:** Complex, non-linear data boundaries.
+
+<img width="1400" height="449" alt="image" src="https://github.com/user-attachments/assets/d66f8cd5-e70b-4ae4-a232-6bc374b692b9" />
+
+
+### B. Isolation Forest (The "20 Questions" Game)
+This algorithm tries to isolate every single point by randomly slicing the data.
+* **The Logic:** Anomalies are "few and different." Because they are different, it is **easier** to separate them from the crowd.
+* **The Process:**
+    1. Randomly pick a feature and a split value.
+    2. Repeat until the point is alone.
+    3. Count how many cuts it took.
+* **The Score:**
+    * **Short Path (Few cuts):** Easy to isolate = **Anomaly**.
+    * **Long Path (Many cuts):** Hard to isolate (buried in the crowd) = **Normal**.
+
+<img width="1318" height="792" alt="image" src="https://github.com/user-attachments/assets/35c73284-5b3c-45ba-934a-67969d07e28d" />
+
+
+### C. Local Outlier Factor - LOF (The "Density Checker")
+This compares the density of a point to the density of its neighbors.
+* **The Logic:** If I am standing in a crowd, my "density" is high. If I am standing alone in a field, my "density" is low.
+* **Mechanism:** It looks at the $k$-nearest neighbors.
+    * If a point has a much **lower density** than its neighbors, it is an outlier.
+* **Formula Insight:**
+    $$LOF(p) \approx \frac{\text{Density of Neighbors}}{\text{Density of Point } p}$$
+    * **LOF > 1:** Anomaly (I am less dense than my neighbors).
+    * **LOF ≈ 1:** Normal (I am similar to my neighbors).
+
+<img width="640" height="480" alt="image" src="https://github.com/user-attachments/assets/a14b6de5-bb36-4324-bf1d-18d715ecf218" />
+
+---
+
+## 4. Summary of Scores
+
+| Algorithm | Metric | Interpretation |
+| :--- | :--- | :--- |
+| **Isolation Forest** | Anomaly Score (0 to 1) | **Close to 1:** Anomaly<br>**Close to 0.5:** Normal |
+| **LOF** | LOF Score | **Significantly > 1:** Anomaly<br>**~ 1:** Normal |
+| **Z-Score** (Stat) | Standard Deviations | **> 3 or < -3:** Typically an Anomaly |
+
+---
+
+## 5. Critical Data Assumptions
+
+1.  **Imbalance:** Anomaly detection assumes anomalies are rare (e.g., 1% of the data). If 50% of your data is "anomalous," the algorithms will fail to find a "normal" baseline.
+2.  **Feature Relevance:** If you don't include the right features (e.g., you check "time of day" but not "transaction amount" for fraud), you won't find the anomaly.
+3.  **Distribution:** Statistical methods assume a Normal (Gaussian) distribution. If your data is skewed, Z-scores might mislead you.
