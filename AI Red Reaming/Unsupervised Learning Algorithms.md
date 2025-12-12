@@ -100,7 +100,7 @@ Look at every data point in the dataset. Assign it to the **nearest** Centroid b
 Calculate the **mean (average)** of all the points currently assigned to a cluster. Move the Centroid to this new average position.
 
 ### Step 4: Iteration
-Repeat Steps 2 and 3 until the Centroids stop moving (convergence) or you reach a maximum number of tries.
+Repeat Steps 2 and 3 until the Centroids stop moving (convergence) or you reach a maximum number of tries. Once the centroids stabilize, re-assigning points yields the same result, so the algorithm has found a solution
 
 ---
 
@@ -126,9 +126,11 @@ How do you know how many clusters ($K$) you should have? (e.g., Should we group 
 
 ### Method A: The Elbow Method (Visual)
 1.  Run K-Means for a range of $K$ (e.g., 1 to 10).
-2.  Calculate the **WCSS** (Within-Cluster Sum of Squares) for each. This measures variance.
+2.  Calculate the **WCSS** (Within-Cluster Sum of Squares) for each value of K. The WCSS measures the total variance within each cluster. Lower WCSS values indicate that the data points within clusters are more similar.
 3.  **Plot WCSS vs. K.**
 4.  **Look for the "Elbow":** The point where the WCSS starts dropping slowly. This is the sweet spot between "too simple" and "overfitting."
+
+The elbow indicates the point of diminishing returns, where adding more clusters ($K$) no longer yields a significant drop in variance (WCSS).
 
 <img width="562" height="455" alt="image" src="https://github.com/user-attachments/assets/75297ed8-cf32-4df1-bebf-472ac055476a" />
 
