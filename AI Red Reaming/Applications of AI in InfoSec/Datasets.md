@@ -29,26 +29,7 @@ A high-quality dataset must hit these 6 benchmarks:
 
 ---
 
-## 3. Case Study: Network Logs (`demo_dataset.csv`) 📁
-
-We will use a sample dataset of network traffic to build an Intrusion Detection System.
-
-**Columns (Features):**
-* `log_id`: Unique ID.
-* `source_ip`: Where the traffic came from.
-* `destination_port`: Where it's going.
-* `protocol`: Type of traffic (TCP, SSH, etc.).
-* `bytes_transferred`: Size of data.
-* `threat_level`: **The Target**. (0 = Safe, 1 = Low Threat, 2 = High Threat).
-
-**Known Issues (Challenges):**
-* Mixed data types (numbers and text).
-* Missing values ("NaN").
-* Weird symbols in the threat column ("?", "-1").
-
----
-
-## 4. Loading & Exploring with Pandas 🐼
+## 3. Loading & Exploring with Pandas 🐼
 
 We use the Python library **Pandas** to handle tabular data. It loads data into a **DataFrame** (a programmable Excel sheet).
 
