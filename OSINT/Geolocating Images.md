@@ -48,3 +48,30 @@ shows us that the place that had likelly the webcam set up was "Wrigleyville Spo
 
 <img width="441" height="278" alt="image" src="https://github.com/user-attachments/assets/b2284946-1ea1-4b93-9a02-869b42603598" />
 
+# Geolocation: Contextual Clues & Metadata
+
+## 1. Cultural & Architectural Context
+It is crucial to understand what is logically likely to exist in a specific region. To be good at geolocation, you have to open your eyes to all possibilities and baseline expectations.
+* **Religious Buildings:** For example, it is highly unlikely to find a standard Catholic church in a region where Buddhism or Islam is the dominant religion.
+
+## 2. Language & Textual Clues
+Text hidden in plain sight is one of your strongest geolocation tools.
+* **Signage:** Look closely at the language used on shop signs, billboards, and commercial vehicles. 
+* **Translation Tools:** Use tools like Google Translate (specifically the image/camera translation feature) to predict and identify the language.
+
+## 3. Infrastructure & Traffic
+Roadways are heavily standardized by country or state, making them excellent identifiers. Pay attention to:
+* **Driving Side:** Which side of the road are the cars driving on?
+* **License Plates:** The shape, color, and formatting of license plates can often pinpoint a specific country or state.
+* **Road Markings:** Different countries use distinct line colors, patterns, and symbols on their roads.
+* **Traffic Lights:** The physical style and mounting of traffic lights vary significantly across regions.
+
+## 4. Climate & People
+Even the smallest, everyday details that we normally wouldn't think twice about can reveal a location or the time of year.
+* **Clothing Choices:** What are the pedestrians wearing? Heavy winter coats might be common during winter in your country, but highly unlikely during the same months in places like Australia.
+
+## 5. Digital Footprint & Metadata
+Sometimes the most obvious clues aren't in the picture itself, but in the data attached to it.
+* **EXIF Data:** Look at the image properties and details. Does the raw file contain EXIF data (which can include exact GPS coordinates)?
+* **Social Media Tags:** Where was the image posted? Did the user tag a location on the social media platform when uploading it?
+
